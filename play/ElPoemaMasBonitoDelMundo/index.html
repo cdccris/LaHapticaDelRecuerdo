@@ -1,1 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>El Poema Más Bonito Del Mundo</title>
 
+  <!-- Social / Meta -->
+  <meta name="description" content="Escucha el poema narrado por Cristina Del Campo.">
+  <meta property="og:title" content="El Poema Más Bonito Del Mundo">
+  <meta property="og:description" content="Escucha el poema narrado por Cristina Del Campo.">
+  <meta property="og:image" content="https://cdccris.github.io/LaHapticaDelRecuerdo/ElPoemaMasBonitoDelMundo/cover.png">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="El Poema Más Bonito Del Mundo">
+  <meta name="twitter:description" content="Escucha el poema narrado por Cristina Del Campo.">
+  <meta name="twitter:image" content="https://cdccris.github.io/LaHapticaDelRecuerdo/ElPoemaMasBonitoDelMundo/cover.png">
+  <meta name="theme-color" content="#2a0e16">
+
+  <style>
+    :root{
+      --bg1:#16060a;     /* burdeos muy oscuro */
+      --bg2:#2a0e16;     /* burdeos oscuro */
+      --accent:#f59e0b;  /* dorado suave */
+      --text:#f3f4f6;
+      --muted:#cbd5e1;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,"Helvetica Neue",Arial;
+      color:var(--text);
+      background:
+        radial-gradient(900px 520px at 70% -10%, var(--bg2), transparent 60%),
+        linear-gradient(180deg, var(--bg1), #0e0407);
+      display:flex; align-items:center; justify-content:center; padding:24px;
+    }
+
+    /* Tarjeta que se ensancha según el contenido (título) */
+    .card{
+      display:inline-block;
+      width:auto;
+      min-width:720px;                 /* ancho mínimo cómodo */
+      max-width:calc(100vw - 48px);    /* no desbordar en pantallas estrechas */
+      background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:24px;
+      box-shadow:0 12px 50px rgba(0,0,0,.45);
+      padding:24px;
+      backdrop-filter:blur(8px);
+    }
+
+    .row{
+      display:grid;
+      grid-template-columns: clamp(90px, 18vw, 140px) minmax(max-content, 1fr);
+      gap:20px;
+      align-items:start;
+    }
+
+    .cover{
+      width:100%;
+      aspect-ratio:1/1;
+      border-radius:16px; object-fit:cover;
+      border:1px solid rgba(255,255,255,0.20);
+      background:#12080b;
+    }
+
+    h1{
+      margin:0 0 6px 0; font-weight:800;
+      font-size: clamp(20px, 3.4vw, 34px);
+      line-height:1.15;
+      white-space: nowrap;   /* 1 sola línea (la tarjeta crece) */
+      overflow: hidden;
+    }
+
+    .meta{color:var(--muted); margin-bottom:14px}
+
+    audio{width:100%; outline:none; margin-top:10px}
+
+    .actions{display:flex; gap:10px; margin-top:16px; flex-wrap:wrap}
+
+    .btn{
+      appearance:none; border:none; cursor:pointer;
+      background:var(--accent); color:#23160f; font-weight:800;
+      padding:10px 14px; border-radius:12px;
+      transition:.15s transform, .15s filter;
+    }
+    .btn:hover{ filter:brightness(1.05); transform: translateY(-1px); }
+
+    .btn.secondary{
+      background:transparent; color:var(--text);
+      border:1px solid rgba(255,255,255,0.22);
+    }
+
+    .small{font-size:12px; color:var(--muted); margin-top:8px}
+    .center{ text-align:center; margin-top:10px}
+
+    /* Móvil: caber siempre, títulos pueden partirse */
+    @media (max-width:760px){
+      .card{ min-width:auto; max-width:calc(100vw - 24px); }
+      .row{ grid-template-columns: 86px 1fr; }
+      h1{ white-space: normal; } /* permitimos 2+ líneas en pantallas pequeñas */
+      .btn{ width:100%; text-align:center; justify-content:center; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="region" aria-label="Reproductor del poema 1">
+    <div class="row">
+      <img class="cover" src="https://cdccris.github.io/LaHapticaDelRecuerdo/ElPoemaMasBonitoDelMundo/cover.png"
+           alt="Portada del poema" onerror="this.style.visibility='hidden'">
+
+      <div>
+        <h1>El Poema Más Bonito Del Mundo</h1>
+        <div class="meta">Lectura por Cristina Del Campo</div>
+
+        <!-- Reproductor nativo -->
+        <audio id="player" controls preload="metadata" aria-label="Audio del poema 1">
+          <source src="https://cdccris.github.io/LaHapticaDelRecuerdo/ElPoemaMasBonitoDelMundo/audio.mp3" type="audio/mpeg">
+          Tu navegador no soporta el elemento de audio.
+        </audio>
+
+        <div class="actions">
+          <a class="btn" id="download"
+             href="https://cdccris.github.io/LaHapticaDelRecuerdo/ElPoemaMasBonitoDelMundo/audio.mp3"
+             download="ElPoemaMasBonitoDelMundo_CristinaDelCampo.mp3">Descargar MP3</a>
+          <button class="btn secondary" id="share">Compartir</button>
+        </div>
+
+        <div class="small">
+          Consejo: en móviles pulsa ▶ para empezar (los navegadores bloquean el autoplay).
+        </div>
+      </div>
+    </div>
+
+    <div class="center small">© 2025 · Poemas</div>
+  </main>
+
+  <script>
+    const player = document.getElementById('player');
+    const shareBtn = document.getElementById('share');
+
+    // Compartir nativo (si existe)
+    if (navigator.share){
+      shareBtn.addEventListener('click', ()=> navigator.share({
+        title: document.title,
+        text: 'Escucha este poema',
+        url: location.href
+      }));
+    }else{
+      shareBtn.style.display='none';
+    }
+
+    // Atajos de teclado útiles (play/pause y saltos)
+    document.addEventListener('keydown', (e)=>{
+      if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+      if (e.code==='Space' || e.key==='k'){ e.preventDefault(); player.paused ? player.play() : player.pause(); }
+      if (e.key==='ArrowRight') { player.currentTime = Math.min(player.duration || 0, player.currentTime + 5); }
+      if (e.key==='ArrowLeft')  { player.currentTime = Math.max(0, player.currentTime - 5); }
+    });
+
+    // Mensaje si el audio falla
+    player.addEventListener('error', ()=>{
+      alert('No se pudo cargar el audio. Inténtalo de nuevo más tarde.');
+    });
+  </script>
+</body>
+</html>
