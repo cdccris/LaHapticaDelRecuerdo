@@ -72,9 +72,14 @@
       line-height:1.15;
       white-space: nowrap;   /* 1 sola línea (la tarjeta crece) */
       overflow: hidden;
+      text-align: center;
     }
 
-    .meta{color:var(--muted); margin-bottom:14px}
+    .meta{
+      color:var(--muted); 
+      margin-bottom:14px;
+      text-align: center;
+    }
 
     audio{width:100%; outline:none; margin-top:10px}
 
@@ -93,7 +98,7 @@
       border:1px solid rgba(255,255,255,0.22);
     }
 
-    .small{font-size:12px; color:var(--muted); margin-top:8px}
+    .small{font-size:12px; color:var(--muted); margin-top:8px; text-align: center;}
     .center{ text-align:center; margin-top:10px}
 
     /* Móvil: caber siempre, títulos pueden partirse */
@@ -117,6 +122,7 @@
 
         <!-- Reproductor nativo -->
         <audio id="player" controls preload="metadata" aria-label="Audio del poema 1">
+          <source src="https://cdccris.github.io/LaHapticaDelRecuerdo/ElPoemaMasBonitoDelMundo/audio.m4a" type="audio/mp4">
           <source src="https://cdccris.github.io/LaHapticaDelRecuerdo/ElPoemaMasBonitoDelMundo/audio.mp3" type="audio/mpeg">
           Tu navegador no soporta el elemento de audio.
         </audio>
@@ -134,7 +140,6 @@
       </div>
     </div>
 
-    <div class="center small">© 2025 · Poemas</div>
   </main>
 
   <script>
