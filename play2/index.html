@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La Háptica del Recuerdo</title>
+  <meta name="theme-color" content="#0d0307" id="theme-meta">
+  <style>
+    :root {
+      --bg1: #0d0307;
+      --bg2: #1a0810;
+      --accent: #c9a84c;
+      --text: #f0e8d8;
+      --muted: #9a8878;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      min-height: 100vh;
+      transition: background 0.4s ease;
+    }
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background: radial-gradient(900px 520px at 65% -5%, var(--bg2), transparent 55%),
+                  linear-gradient(180deg, var(--bg1), color-mix(in srgb, var(--bg1) 80%, black));
+      z-index: 0;
+    }
+
+    .card {
+      position: relative; z-index: 1;
+      width: auto;
+      min-width: min(680px, calc(100vw - 48px));
+      max-width: calc(100vw - 48px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      box-shadow: 0 16px 60px rgba(0,0,0,.5);
+      padding: 28px;
+      backdrop-filter: blur(10px);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: clamp(100px, 18vw, 150px) 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .cover {
+      width: 100%;
+      aspect-ratio: 1/1;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: #12080b;
+      display: block;
+    }
+
+    .info { display: flex; flex-direction: column; gap: 0; }
+
+    h1 {
+      margin: 0 0 6px 0;
+      font-weight: 800;
+      font-size: clamp(18px, 3vw, 32px);
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    audio {
+      width: 100%;
+      outline: none;
+      margin-top: 4px;
+      accent-color: var(--accent);
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none; border: none; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center;
+      background: var(--accent);
+      color: #1a0f04;
+      font-weight: 700; font-size: 14px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      transition: .15s transform, .15s filter;
+    }
+    .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+    .btn.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.20);
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .back-link {
+      position: absolute;
+      top: -40px; left: 0;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity .2s;
+    }
+    .back-link:hover { opacity: 1; }
+
+    #loading {
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+      padding: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 20px; min-width: auto; }
+      .row { grid-template-columns: 88px 1fr; gap: 16px; }
+      h1 { font-size: clamp(16px, 5vw, 24px); }
+      .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading">Cargando poema…</div>
+
+  <script>
+    // ── Datos de cada poema ────────────────────────────────────────
+    const POEMS = {
+      '13_13': {
+        title: '13 : 13',
+        bg1: '#02031a', bg2: '#0a1040',
+        accent: '#b0c0ff', theme: '#02031a'
+      },
+      'ConBuenosOjos': {
+        title: 'Con Buenos Ojos',
+        bg1: '#1a0a02', bg2: '#3c1a06',
+        accent: '#f0b040', theme: '#1a0a02'
+      },
+      'DeAdiosYDespedidas': {
+        title: 'De Adiós y Despedidas',
+        bg1: '#12101a', bg2: '#221e30',
+        accent: '#c0b0e0', theme: '#12101a'
+      },
+      'ElEcoDeLoQueFuimos': {
+        title: 'El Eco de lo que Fuimos',
+        bg1: '#011418', bg2: '#032830',
+        accent: '#40d0e0', theme: '#011418'
+      },
+      'ElLugar': {
+        title: 'El Lugar',
+        bg1: '#140e02', bg2: '#2c1e06',
+        accent: '#e8be50', theme: '#140e02'
+      },
+      'ElMiedoAQuererPorHaberQuerido': {
+        title: 'El Miedo a Querer por Haber Querido',
+        bg1: '#04080e', bg2: '#0c1828',
+        accent: '#8090d0', theme: '#04080e'
+      },
+      'ElPoemaMasBonitoDelMundo': {
+        title: 'El Poema Más Bonito del Mundo',
+        bg1: '#1a0810', bg2: '#380c1c',
+        accent: '#f0a0b8', theme: '#1a0810'
+      },
+      'Ensordecedor': {
+        title: 'Ensordecedor',
+        bg1: '#040404', bg2: '#141414',
+        accent: '#ffffff', theme: '#040404'
+      },
+      'Galtzerdi': {
+        title: 'Galtzerdi',
+        bg1: '#041008', bg2: '#0c2412',
+        accent: '#80d860', theme: '#041008'
+      },
+      'HabitarEnElCasi': {
+        title: 'Habitar en el Casi',
+        bg1: '#100c18', bg2: '#201630',
+        accent: '#c090e8', theme: '#100c18'
+      },
+      'LaAfasiaEnLosTeQuiero': {
+        title: 'La Afasia en los Te Quiero',
+        bg1: '#04041c', bg2: '#0c0c38',
+        accent: '#9090f8', theme: '#04041c'
+      },
+      'LaEscalaDeVerdes': {
+        title: 'La Escala de Verdes',
+        bg1: '#020a04', bg2: '#081804',
+        accent: '#90e878', theme: '#020a04'
+      },
+      'LaVisita': {
+        title: 'La Visita',
+        bg1: '#140802', bg2: '#2c1406',
+        accent: '#ffcc60', theme: '#140802'
+      },
+      'Metamorfosis': {
+        title: 'Metamorfosis',
+        bg1: '#0e0418', bg2: '#200830',
+        accent: '#d060ff', theme: '#0e0418'
+      },
+      'MiradasPorDoquier': {
+        title: 'Miradas por Doquier',
+        bg1: '#020a20', bg2: '#041840',
+        accent: '#60a8ff', theme: '#020a20'
+      },
+      'NadarPorEncimaDeLaLinea': {
+        title: 'Nadar por Encima de la Línea',
+        bg1: '#030c1c', bg2: '#081830',
+        accent: '#7ab0ff', theme: '#030c1c'
+      },
+      'NuncaMeHasQuerido': {
+        title: 'Nunca Me Has Querido',
+        bg1: '#0e0e10', bg2: '#1c1c20',
+        accent: '#b0a8c0', theme: '#0e0e10'
+      },
+      'QuienSoy': {
+        title: 'Quién Soy',
+        bg1: '#0c0c10', bg2: '#181820',
+        accent: '#d0c8e0', theme: '#0c0c10'
+      },
+      'Sinestesia2011': {
+        title: 'Sinestesia 2011',
+        bg1: '#040404', bg2: '#101010',
+        accent: '#f0f060', theme: '#040404'
+      },
+      '_8': {
+        title: '< 8',
+        bg1: '#140002', bg2: '#280408',
+        accent: '#ff4050', theme: '#140002'
+      },
+    };
+
+    const BASE = 'https://cdccris.github.io/LaHapticaDelRecuerdo';
+
+    // Extraer nombre de poema de la URL
+    // URL: /LaHapticaDelRecuerdo/play/NombrePoema/
+    const parts = location.pathname.replace(/\/$/, '').split('/');
+    const poemKey = parts[parts.length - 1];
+    const poem = POEMS[poemKey];
+
+    if (!poem) {
+      document.getElementById('loading').innerHTML =
+        'Poema no encontrado. <a href="' + BASE + '/" style="color:#c9a84c">Volver al índice</a>';
+    } else {
+      // Aplicar colores
+      const root = document.documentElement;
+      root.style.setProperty('--bg1', poem.bg1);
+      root.style.setProperty('--bg2', poem.bg2);
+      root.style.setProperty('--accent', poem.accent);
+      document.getElementById('theme-meta').content = poem.theme;
+      document.title = poem.title + ' · La Háptica del Recuerdo';
+
+      const assetBase = `${BASE}/${poemKey}`;
+      const playBase  = `${BASE}/play/${poemKey}`;
+
+      document.getElementById('loading').outerHTML = `
+        <main class="card" role="region" aria-label="Reproductor: ${poem.title}">
+          <a class="back-link" href="${BASE}/">← Poemario</a>
+          <div class="row">
+            <img class="cover"
+                 src="${assetBase}/cover.png"
+                 alt="Portada de ${poem.title}"
+                 onerror="this.style.visibility='hidden'">
+            <div class="info">
+              <h1>${poem.title}</h1>
+              <div class="meta">Lectura por Cristina Del Campo</div>
+              <audio id="player" controls preload="metadata" aria-label="Audio: ${poem.title}">
+                <source src="${assetBase}/audio.m4a" type="audio/mp4">
+                <source src="${assetBase}/audio.mp3" type="audio/mpeg">
+                Tu navegador no soporta el elemento de audio.
+              </audio>
+              <div class="actions">
+                <a class="btn" href="${assetBase}/audio.mp3"
+                   download="${poemKey}_CristinaDelCampo.mp3">Descargar MP3</a>
+                <button class="btn secondary" id="share-btn">Compartir</button>
+              </div>
+              <p class="hint">En móviles pulsa ▶ para empezar (los navegadores bloquean el autoplay).</p>
+            </div>
+          </div>
+        </main>`;
+
+      // Share
+      const shareBtn = document.getElementById('share-btn');
+      if (navigator.share) {
+        shareBtn.addEventListener('click', () => navigator.share({
+          title: poem.title,
+          text: 'Escucha este poema de Cristina Del Campo',
+          url: location.href
+        }));
+      } else {
+        shareBtn.style.display = 'none';
+      }
+
+      // Keyboard shortcuts
+      const player = () => document.getElementById('player');
+      document.addEventListener('keydown', e => {
+        if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+        const p = player();
+        if (!p) return;
+        if (e.code === 'Space' || e.key === 'k') { e.preventDefault(); p.paused ? p.play() : p.pause(); }
+        if (e.key === 'ArrowRight') p.currentTime = Math.min(p.duration || 0, p.currentTime + 5);
+        if (e.key === 'ArrowLeft')  p.currentTime = Math.max(0, p.currentTime - 5);
+      });
+    }
+  </script>
+</body>
+</html>
