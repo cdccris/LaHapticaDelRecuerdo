@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Sinestesia 2011 · La Háptica del Recuerdo</title>
+
+  <meta name="description" content="Escucha «Sinestesia 2011», narrado por Cristina Del Campo.">
+  <meta property="og:title"       content="Sinestesia 2011">
+  <meta property="og:description" content="Escucha «Sinestesia 2011», narrado por Cristina Del Campo.">
+  <meta property="og:image"       content="https://cdccris.github.io/LaHapticaDelRecuerdo/Sinestesia2011/cover.png">
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://cdccris.github.io/LaHapticaDelRecuerdo/play/Sinestesia2011/">
+  <meta name="twitter:card"       content="summary_large_image">
+  <meta name="twitter:title"      content="Sinestesia 2011">
+  <meta name="twitter:description"content="Escucha «Sinestesia 2011», narrado por Cristina Del Campo.">
+  <meta name="twitter:image"      content="https://cdccris.github.io/LaHapticaDelRecuerdo/Sinestesia2011/cover.png">
+  <meta name="theme-color"        content="#040404">
+
+  <!-- Redirige al reproductor genérico conservando la URL bonita -->
+  <script>
+    // El reproductor genérico está en el padre (/play/index.html)
+    // y lee el poema desde la URL, así que simplemente lo cargamos.
+    // Si ya estamos aquí, el service worker / GitHub Pages ya habrá
+    // servido este archivo; el JS del padre hará el resto.
+  </script>
+  <style>
+    html,body{margin:0;height:100%;background:#040404;}
+    body{display:flex;align-items:center;justify-content:center;
+          font-family:system-ui,sans-serif;color:#888;font-size:14px;}
+  </style>
+</head>
+<body>
+  <p>Cargando…</p>
+  <!-- El index.html del padre (/play/index.html) no se carga aquí
+       porque GitHub Pages sirve este archivo para esta ruta.
+       Necesitamos incluir el reproductor completo o redirigir. -->
+  <script>
+    // Cargar el reproductor genérico inline
+    fetch('https://cdccris.github.io/LaHapticaDelRecuerdo/play/index.html')
+      .then(r => r.text())
+      .then(html => {
+        document.open();
+        document.write(html);
+        document.close();
+      })
+      .catch(() => {
+        location.replace('https://cdccris.github.io/LaHapticaDelRecuerdo/play/index.html');
+      });
+  </script>
+</body>
+</html>
