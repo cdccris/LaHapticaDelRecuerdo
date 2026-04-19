@@ -11,6 +11,8 @@
   <meta property="og:image" content="https://cdccris.github.io/LaHapticaDelRecuerdo/cover.png">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#120509">
+  <link rel="manifest" href="/LaHapticaDelRecuerdo/manifest.json">
+
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -730,5 +732,14 @@
     durObserver.observe(indexSection);
   </script>
 
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/LaHapticaDelRecuerdo/sw.js')
+          .catch(() => {});
+      });
+    }
+  </script>
 </body>
 </html>
