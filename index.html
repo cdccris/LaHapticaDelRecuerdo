@@ -306,6 +306,57 @@
       .poem-name  { font-size: 16px; }
       .poem-dur   { font-size: 10px; }
     }
+
+    /* ─── BOTÓN INSTALAR PWA ─── */
+    .install-wrap {
+      text-align: center;
+      padding: 0 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .install-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.35);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.2s;
+      appearance: none;
+    }
+    .install-btn:hover {
+      background: rgba(201,168,76,0.08);
+      border-color: rgba(201,168,76,0.7);
+      transform: translateY(-2px);
+    }
+    .install-btn svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+    .install-btn.hidden { display: none; }
+
+    .install-ios {
+      display: none;
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.6;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+    .install-ios strong { color: var(--gold); font-style: normal; }
+    .install-ios.visible { display: block; }
+
   </style>
 </head>
 <body>
@@ -639,6 +690,25 @@
     </ol>
   </section>
 
+  <!-- ════ INSTALAR PWA ════ -->
+  <div class="install-wrap" id="install-wrap">
+
+    <!-- Android / Desktop Chrome: botón directo -->
+    <button class="install-btn hidden" id="install-btn" aria-label="Añadir a pantalla de inicio">
+      <svg viewBox="0 0 24 24"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>
+      Añadir a pantalla de inicio
+    </button>
+
+    <!-- iOS Safari: instrucciones -->
+    <p class="install-ios" id="install-ios">
+      En Safari, pulsa
+      <strong>Compartir</strong> →
+      <strong>Añadir a pantalla de inicio</strong>
+      para instalar el poemario como app.
+    </p>
+
+  </div>
+
   <!-- ════ COLOFÓN ════ -->
   <footer class="colophon">
     <div class="colophon-line"></div>
@@ -734,12 +804,53 @@
 
 
   <script>
+    // ── Service Worker ──────────────────────────────────────────
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/LaHapticaDelRecuerdo/sw.js')
           .catch(() => {});
       });
     }
+
+    // ── Botón instalar PWA ───────────────────────────────────────
+    const installBtn = document.getElementById('install-btn');
+    const installIos = document.getElementById('install-ios');
+    let deferredPrompt = null;
+
+    // Detectar iOS
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isInStandaloneMode = window.navigator.standalone === true
+                            || window.matchMedia('(display-mode: standalone)').matches;
+
+    if (isInStandaloneMode) {
+      // Ya está instalada — ocultar todo el bloque
+      document.getElementById('install-wrap').style.display = 'none';
+    } else if (isIos) {
+      // iOS: mostrar instrucciones
+      installIos.classList.add('visible');
+    }
+
+    // Android/Chrome/Edge: capturar el evento antes de que el navegador lo muestre
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.classList.remove('hidden');
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if (outcome === 'accepted') {
+        document.getElementById('install-wrap').style.display = 'none';
+      }
+    });
+
+    // Ocultar cuando se instale
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('install-wrap').style.display = 'none';
+    });
   </script>
 </body>
 </html>
