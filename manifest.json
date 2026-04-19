@@ -1,0 +1,26 @@
+{
+  "name": "La Háptica del Recuerdo",
+  "short_name": "La Háptica",
+  "description": "Poemario de Cristina Del Campo. Escucha cada poema narrado en su propia voz.",
+  "start_url": "/LaHapticaDelRecuerdo/",
+  "scope": "/LaHapticaDelRecuerdo/",
+  "display": "standalone",
+  "background_color": "#0d0307",
+  "theme_color": "#0d0307",
+  "orientation": "portrait-primary",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/LaHapticaDelRecuerdo/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/LaHapticaDelRecuerdo/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
