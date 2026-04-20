@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La Visita · La Háptica del Recuerdo</title>
+
+  <meta name="description" content="Escucha «La Visita», narrado por Cristina Del Campo.">
+  <meta property="og:title"        content="La Visita">
+  <meta property="og:description"  content="Escucha «La Visita», narrado por Cristina Del Campo.">
+  <meta property="og:image"        content="https://cdccris.github.io/LaHapticaDelRecuerdo/LaVisita/cover.png">
+  <meta property="og:type"         content="website">
+  <meta property="og:url"          content="https://cdccris.github.io/LaHapticaDelRecuerdo/play/LaVisita/">
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="La Visita">
+  <meta name="twitter:description" content="Escucha «La Visita», narrado por Cristina Del Campo.">
+  <meta name="twitter:image"       content="https://cdccris.github.io/LaHapticaDelRecuerdo/LaVisita/cover.png">
+  <meta name="theme-color"         content="#140802">
+
+  <style>
+    :root{
+      --bg1:#140802;
+      --bg2:#2c1406;
+      --accent:#ffcc60;
+      --text:#f3f4f6;
+      --muted:#cbd5e1;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 520px at 60% -5%, var(--bg2), transparent 55%),
+        linear-gradient(180deg, var(--bg1), #140802);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 32px 16px 60px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      box-shadow: 0 16px 60px rgba(0,0,0,.5);
+      padding: 28px 28px 32px;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    /* ── Volver ── */
+    .back {
+      align-self: flex-start;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      opacity: 0.65;
+      margin-bottom: 20px;
+      transition: opacity .2s;
+    }
+    .back:hover { opacity: 1; }
+
+    /* ── Portada ── */
+    .cover {
+      width: 180px;
+      height: 180px;
+      border-radius: 16px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: #140802;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    /* ── Título y meta ── */
+    h1 {
+      font-weight: 800;
+      font-size: clamp(20px, 5vw, 30px);
+      line-height: 1.2;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    /* ── Audio ── */
+    audio {
+      width: 100%;
+      outline: none;
+      accent-color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    /* ── Botones ── */
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+    .btn {
+      appearance: none; border: none; cursor: pointer;
+      background: var(--accent); color: #140802; font-weight: 800;
+      font-size: 14px;
+      padding: 10px 18px; border-radius: 12px;
+      transition: .15s transform, .15s filter;
+      text-decoration: none;
+      display: inline-flex; align-items: center;
+    }
+    .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .btn.secondary {
+      background: transparent; color: var(--text);
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+    .hint {
+      font-size: 12px; color: var(--muted);
+      text-align: center; margin-bottom: 28px;
+    }
+
+    /* ── Separador ── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);
+      margin-bottom: 28px;
+    }
+
+    /* ── Texto del poema ── */
+    .poem-text {
+      width: 100%;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-size: clamp(15px, 2.5vw, 17px);
+      line-height: 1.85;
+      color: rgba(243,244,246,0.88);
+    }
+    .poem-text .strophe {
+      margin-bottom: 1.6em;
+    }
+    .poem-text .strophe:last-child {
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 20px 12px 50px; }
+      .card { padding: 22px 20px 28px; }
+      .cover { width: 150px; height: 150px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" role="region" aria-label="Reproductor: La Visita">
+
+    <a class="back" href="https://cdccris.github.io/LaHapticaDelRecuerdo/">← Poemario</a>
+
+    <img class="cover"
+         src="https://cdccris.github.io/LaHapticaDelRecuerdo/LaVisita/cover.png"
+         alt="Portada de La Visita"
+         onerror="this.style.display='none'">
+
+    <h1>La Visita</h1>
+    <div class="meta">Lectura por Cristina Del Campo</div>
+
+    <audio id="player" controls preload="metadata" aria-label="Audio: La Visita">
+      <source src="https://cdccris.github.io/LaHapticaDelRecuerdo/LaVisita/audio.m4a" type="audio/mp4">
+      <source src="https://cdccris.github.io/LaHapticaDelRecuerdo/LaVisita/audio.mp3" type="audio/mpeg">
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <div class="actions">
+      <a class="btn"
+         href="https://cdccris.github.io/LaHapticaDelRecuerdo/LaVisita/audio.mp3"
+         download="LaVisita_CristinaDelCampo.mp3">Descargar MP3</a>
+      <button class="btn secondary" id="share">Compartir</button>
+    </div>
+
+    <p class="hint">En móviles pulsa ▶ para empezar.</p>
+
+    <div class="divider"></div>
+
+    <div class="poem-text" aria-label="Texto del poema">
+        <p class="strophe">Anoche vino a visitarme.<br>No avisó de que venía.<br>No llamó a la puerta antes de entrar.<br>No se despidió cuando salió.<br>Alteró cuanto tenía.</p>
+        <p class="strophe">Un metrónomo atrapado en dos cajas de acero,<br>dos collares de agua colgando de las pupilas,<br>y solo dejó una imagen difuminada<br>entre cuatro paredes vacías.</p>
+        <p class="strophe">Quise buscarle color,<br>pero ya no se veía.</p>
+        <p class="strophe">Era transparente y quemaba.</p>
+        <p class="strophe">Le recibí en silencio.<br>No le invité a marcharse<br>aunque dolía.</p>
+        <p class="strophe">Anoche vino a visitarme.<br>Ya no me visita de día.</p>
+        <p class="strophe">Por más que intento dormir,<br>tu recuerdo, por las noches,<br>viene a verme todavía.</p>
+    </div>
+
+  </main>
+
+  <script>
+    const shareBtn = document.getElementById('share');
+    if (navigator.share) {
+      shareBtn.addEventListener('click', () => navigator.share({
+        title: 'La Visita',
+        text: 'Escucha este poema de Cristina Del Campo',
+        url: location.href
+      }));
+    } else {
+      shareBtn.style.display = 'none';
+    }
+
+    const player = document.getElementById('player');
+    document.addEventListener('keydown', e => {
+      if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+      if (e.code === 'Space' || e.key === 'k') { e.preventDefault(); player.paused ? player.play() : player.pause(); }
+      if (e.key === 'ArrowRight') player.currentTime = Math.min(player.duration||0, player.currentTime+5);
+      if (e.key === 'ArrowLeft')  player.currentTime = Math.max(0, player.currentTime-5);
+    });
+
+    player.addEventListener('error', () => {
+      alert('No se pudo cargar el audio. Inténtalo de nuevo más tarde.');
+    });
+  </script>
+</body>
+</html>
