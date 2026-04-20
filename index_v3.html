@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>La Háptica del Recuerdo</title>
+
+  <meta name="description" content="Poemario de Cristina Del Campo. Escucha cada poema narrado en su propia voz.">
+  <meta property="og:title" content="La Háptica del Recuerdo">
+  <meta property="og:description" content="Poemario de Cristina Del Campo.">
+  <meta property="og:image" content="https://cdccris.github.io/LaHapticaDelRecuerdo/cover.png">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#120509">
+  <link rel="manifest" href="/LaHapticaDelRecuerdo/manifest.json">
+
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:     #0d0307;
+      --bg2:    #1a0810;
+      --bg3:    #2a1020;
+      --gold:   #c9a84c;
+      --gold2:  #e8c97a;
+      --red:    #8b1a2e;
+      --text:   #f0e8d8;
+      --muted:  #9a8878;
+      --border: rgba(201,168,76,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── PORTADA ─── */
+    .cover-section {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px 80px;
+      overflow: hidden;
+    }
+    .cover-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 20%, rgba(139,26,46,0.35) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(42,16,32,0.6)  0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 80% 70%, rgba(201,168,76,0.07) 0%, transparent 60%);
+      z-index: 0;
+    }
+    .cover-lines { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+    .cover-lines::before,
+    .cover-lines::after {
+      content: '';
+      position: absolute; left: 50%;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.06);
+    }
+    .cover-lines::before { width: 700px;  height: 700px;  top: -200px; }
+    .cover-lines::after  { width: 1100px; height: 1100px; top: -450px; }
+    .cover-inner {
+      position: relative; z-index: 1;
+      max-width: 560px;
+    }
+    .cover-ornament {
+      display: block;
+      font-size: 22px; letter-spacing: 0.5em;
+      color: var(--gold); opacity: 0.7;
+      margin-bottom: 32px;
+      animation: fadeUp 1.2s ease both;
+    }
+    .cover-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(28px, 6vw, 56px);
+      font-weight: 400; letter-spacing: 0.06em; line-height: 1.2;
+      color: var(--text);
+      text-shadow: 0 2px 40px rgba(139,26,46,0.5);
+      animation: fadeUp 1.2s 0.15s ease both;
+    }
+    .cover-divider {
+      width: 120px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 28px auto;
+      animation: fadeIn 1.5s 0.4s ease both;
+    }
+    .cover-subtitle {
+      font-size: clamp(15px, 2.2vw, 20px);
+      font-style: italic; font-weight: 300;
+      color: var(--muted); letter-spacing: 0.08em;
+      animation: fadeUp 1.2s 0.3s ease both;
+    }
+    .cover-author {
+      margin-top: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(11px, 1.5vw, 14px);
+      font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.85;
+      animation: fadeUp 1.2s 0.45s ease both;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--muted); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+      animation: fadeIn 2s 1.2s ease both;
+    }
+    .scroll-hint .arrow {
+      width: 1px; height: 36px;
+      background: linear-gradient(180deg, var(--gold), transparent);
+      animation: scrollPulse 2s 1.5s ease-in-out infinite;
+    }
+
+    /* ─── ÍNDICE ─── */
+    .index-section {
+      position: relative; z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px 100px;
+    }
+    .index-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+    .index-label {
+      font-family: 'Cinzel', serif;
+      font-size: 11px; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); opacity: 0.7;
+    }
+    .index-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 300; font-style: italic;
+      color: var(--text); margin-top: 10px;
+    }
+
+    /* ─── LISTA ─── */
+    .poem-list {
+      list-style: none;
+      counter-reset: poem-counter;
+    }
+    .poem-item {
+      counter-increment: poem-counter;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .poem-item.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    .poem-link {
+      display: grid;
+      grid-template-columns: 52px 1fr auto auto;
+      align-items: center;
+      gap: 0 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.35s ease, padding-left 0.3s ease;
+    }
+
+    /* fondo de hover */
+    .poem-link::after {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 0;
+      background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+      transition: width 0.4s ease;
+      pointer-events: none;
+    }
+    .poem-link:hover::after { width: 100%; }
+    .poem-link:hover { padding-left: 4px; }
+
+    /* ── miniatura ── */
+    .poem-thumb {
+      width: 52px; height: 52px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: #1a0810;
+      flex-shrink: 0;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.35s ease;
+      display: block;
+    }
+    .poem-link:hover .poem-thumb {
+      transform: scale(1.06);
+      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+    }
+
+    /* ── texto central ── */
+    .poem-center {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+    .poem-num {
+      font-family: 'Cinzel', serif;
+      font-size: 10px; font-weight: 400;
+      color: var(--red);
+      letter-spacing: 0.12em;
+      transition: color 0.35s ease;
+    }
+    .poem-num::before {
+      content: counter(poem-counter, decimal-leading-zero);
+    }
+    .poem-name {
+      font-size: clamp(16px, 2.2vw, 21px);
+      font-weight: 400; font-style: italic;
+      letter-spacing: 0.02em; line-height: 1.25;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transition: color 0.35s ease;
+    }
+
+    /* ── duración ── */
+    .poem-dur {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      color: var(--muted);
+      opacity: 0.7;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      transition: color 0.35s ease, opacity 0.35s ease;
+      min-width: 36px;
+      text-align: right;
+    }
+
+    /* ── flecha ── */
+    .poem-arrow {
+      font-size: 13px;
+      color: var(--gold);
+      opacity: 0;
+      transform: translateX(-6px);
+      transition: opacity 0.3s, transform 0.3s, color 0.35s;
+      width: 18px;
+      text-align: center;
+    }
+    .poem-link:hover .poem-arrow {
+      opacity: 0.9;
+      transform: none;
+    }
+
+    /* ─── COLOFÓN ─── */
+    .colophon {
+      text-align: center;
+      padding: 40px 24px 60px;
+      position: relative; z-index: 1;
+    }
+    .colophon-line {
+      width: 80px; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent);
+      margin: 0 auto 24px;
+    }
+    .colophon-text {
+      font-size: 13px; color: var(--muted);
+      letter-spacing: 0.08em; font-style: italic;
+    }
+
+    /* ─── ANIMACIONES ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: none; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+      50%       { opacity: 1;   transform: scaleY(1.1); }
+    }
+
+    /* ─── MÓVIL ─── */
+    @media (max-width: 500px) {
+      .poem-link {
+        grid-template-columns: 44px 1fr auto auto;
+        gap: 0 10px;
+        padding: 10px 0;
+      }
+      .poem-thumb { width: 44px; height: 44px; border-radius: 6px; }
+      .poem-name  { font-size: 16px; }
+      .poem-dur   { font-size: 10px; }
+    }
+
+    /* ─── BOTÓN INSTALAR PWA ─── */
+    .install-wrap {
+      text-align: center;
+      padding: 0 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .install-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.35);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.3s, border-color 0.3s, color 0.3s, transform 0.2s;
+      appearance: none;
+    }
+    .install-btn:hover {
+      background: rgba(201,168,76,0.08);
+      border-color: rgba(201,168,76,0.7);
+      transform: translateY(-2px);
+    }
+    .install-btn svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+    .install-btn.hidden { display: none; }
+
+    .install-ios {
+      display: none;
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.6;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+    .install-ios strong { color: var(--gold); font-style: normal; }
+    .install-ios.visible { display: block; }
+
+
+    /* ── Fragmento destacado ── */
+    .poem-fragment {
+      font-size: clamp(12px, 1.6vw, 14px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--muted);
+      opacity: 0.75;
+      letter-spacing: 0.01em;
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      transition: opacity 0.35s ease, color 0.35s ease;
+    }
+    .poem-link:hover .poem-fragment {
+      opacity: 1;
+      color: var(--text);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ════ PORTADA ════ -->
+  <section class="cover-section" aria-label="Portada del poemario">
+    <div class="cover-bg"></div>
+    <div class="cover-lines"></div>
+    <div class="cover-inner">
+      <span class="cover-ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
+      <h1 class="cover-title">La Háptica<br>del Recuerdo</h1>
+      <div class="cover-divider"></div>
+      <p class="cover-subtitle">Poemas recitados</p>
+      <p class="cover-author">Cristina Del Campo</p>
+    </div>
+    <div class="scroll-hint" aria-hidden="true">
+      <span>Índice</span>
+      <div class="arrow"></div>
+    </div>
+  </section>
+
+  <!-- ════ ÍNDICE ════ -->
+  <section class="index-section" aria-label="Índice del poemario">
+    <div class="index-header">
+      <p class="index-label">Poemario</p>
+      <h2 class="index-title">Elige un poema para escucharlo</h2>
+    </div>
+
+    <ol class="poem-list" aria-label="Lista de poemas" id="poem-list">
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/13_13/"
+           data-key="13_13" data-accent="#b0c0ff"
+           aria-label="Escuchar 13:13">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/13_13/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">13 : 13</span>
+            <span class="poem-fragment">Con tal de ver cómo sonríes.</span>
+          </div>
+          <span class="poem-dur" aria-label="Duración">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/ConBuenosOjos/"
+           data-key="ConBuenosOjos" data-accent="#f0b040"
+           aria-label="Escuchar Con Buenos Ojos">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/ConBuenosOjos/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Con Buenos Ojos</span>
+            <span class="poem-fragment">No me miras, me ves. No me oyes, me escuchas.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/DeAdiosYDespedidas/"
+           data-key="DeAdiosYDespedidas" data-accent="#c0b0e0"
+           aria-label="Escuchar De Adiós y Despedidas">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/DeAdiosYDespedidas/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">De Adiós y Despedidas</span>
+            <span class="poem-fragment">Nunca he sabido pronunciar un adiós, pero sé mucho de despedidas.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/ElEcoDeLoQueFuimos/"
+           data-key="ElEcoDeLoQueFuimos" data-accent="#40d0e0"
+           aria-label="Escuchar El Eco de lo que Fuimos">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/ElEcoDeLoQueFuimos/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">El Eco de lo que Fuimos</span>
+            <span class="poem-fragment">Solo se escucha el eco de lo que fuimos.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/ElLugar/"
+           data-key="ElLugar" data-accent="#e8be50"
+           aria-label="Escuchar El Lugar">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/ElLugar/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">El Lugar</span>
+            <span class="poem-fragment">Para encontrar la salida, hay que forzar el olvido.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/ElMiedoAQuererPorHaberQuerido/"
+           data-key="ElMiedoAQuererPorHaberQuerido" data-accent="#8090d0"
+           aria-label="Escuchar El Miedo a Querer por Haber Querido">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/ElMiedoAQuererPorHaberQuerido/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">El Miedo a Querer por Haber Querido</span>
+            <span class="poem-fragment">Duele más la cicatriz que la herida.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/ElPoemaMasBonitoDelMundo/"
+           data-key="ElPoemaMasBonitoDelMundo" data-accent="#f0a0b8"
+           aria-label="Escuchar El Poema Más Bonito del Mundo">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/ElPoemaMasBonitoDelMundo/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">El Poema Más Bonito del Mundo</span>
+            <span class="poem-fragment">Nunca podré escribir el poema más bonito, pues te he perdido.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/Ensordecedor/"
+           data-key="Ensordecedor" data-accent="#eeeeee"
+           aria-label="Escuchar Ensordecedor">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/Ensordecedor/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Ensordecedor</span>
+            <span class="poem-fragment">No podemos escucharnos si no nos dejáis oírnos.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/Galtzerdi/"
+           data-key="Galtzerdi" data-accent="#80d860"
+           aria-label="Escuchar Galtzerdi">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/Galtzerdi/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Galtzerdi</span>
+            <span class="poem-fragment">Convierte los imposibles en un ¿ves cómo podías?</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/HabitarEnElCasi/"
+           data-key="HabitarEnElCasi" data-accent="#c090e8"
+           aria-label="Escuchar Habitar en el Casi">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/HabitarEnElCasi/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Habitar en el Casi</span>
+            <span class="poem-fragment">Que nos quisimos. Y que al final todo trataba de eso.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/LaAfasiaEnLosTeQuiero/"
+           data-key="LaAfasiaEnLosTeQuiero" data-accent="#9090f8"
+           aria-label="Escuchar La Afasia en los Te Quiero">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/LaAfasiaEnLosTeQuiero/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">La Afasia en los Te Quiero</span>
+            <span class="poem-fragment">Me has dejado la afasia en los te quiero.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/LaEscalaDeVerdes/"
+           data-key="LaEscalaDeVerdes" data-accent="#90e878"
+           aria-label="Escuchar La Escala de Verdes">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/LaEscalaDeVerdes/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">La Escala de Verdes</span>
+            <span class="poem-fragment">La ciudad se imprime en blanco y negro. Verde esperanza.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/LaVisita/"
+           data-key="LaVisita" data-accent="#ffcc60"
+           aria-label="Escuchar La Visita">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/LaVisita/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">La Visita</span>
+            <span class="poem-fragment">Tu recuerdo, por las noches, viene a verme todavía.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/Metamorfosis/"
+           data-key="Metamorfosis" data-accent="#d060ff"
+           aria-label="Escuchar Metamorfosis">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/Metamorfosis/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Metamorfosis</span>
+            <span class="poem-fragment">Porque fuimos y seremos metamorfosis.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/MiradasPorDoquier/"
+           data-key="MiradasPorDoquier" data-accent="#60a8ff"
+           aria-label="Escuchar Miradas por Doquier">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/MiradasPorDoquier/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Miradas por Doquier</span>
+            <span class="poem-fragment">Maldigo cada pestañeo porque me resta segundos de poder verte.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/NadarPorEncimaDeLaLinea/"
+           data-key="NadarPorEncimaDeLaLinea" data-accent="#7ab0ff"
+           aria-label="Escuchar Nadar por Encima de la Línea">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/NadarPorEncimaDeLaLinea/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Nadar por Encima de la Línea</span>
+            <span class="poem-fragment">Tengo menos miedo y más ganas.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/NuncaMeHasQuerido/"
+           data-key="NuncaMeHasQuerido" data-accent="#b0a8c0"
+           aria-label="Escuchar Nunca Me Has Querido">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/NuncaMeHasQuerido/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Nunca Me Has Querido</span>
+            <span class="poem-fragment">Me daría cuenta de que nunca me has querido.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/QuienSoy/"
+           data-key="QuienSoy" data-accent="#d0c8e0"
+           aria-label="Escuchar Quién Soy">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/QuienSoy/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Quién Soy</span>
+            <span class="poem-fragment">Soy un almacén de ausencias, una galería llena de recuerdos.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/Sinestesia2011/"
+           data-key="Sinestesia2011" data-accent="#f0f060"
+           aria-label="Escuchar Sinestesia 2011">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/Sinestesia2011/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">Sinestesia 2011</span>
+            <span class="poem-fragment">Ninguno de mis sentidos entonces sabía lo que se oía.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+      <li class="poem-item">
+        <a class="poem-link"
+           href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/_8/"
+           data-key="_8" data-accent="#ff4050"
+           aria-label="Escuchar &lt;8">
+          <img class="poem-thumb" src="https://cdccris.github.io/LaHapticaDelRecuerdo/_8/cover.png" alt="" loading="lazy">
+          <div class="poem-center">
+            <span class="poem-num" aria-hidden="true"></span>
+            <span class="poem-name">&lt; 8</span>
+            <span class="poem-fragment">Me declaro cinturón negro en quererte y no decirlo.</span>
+          </div>
+          <span class="poem-dur">—</span>
+          <span class="poem-arrow" aria-hidden="true">→</span>
+        </a>
+      </li>
+
+    </ol>
+  </section>
+
+  <!-- ════ INSTALAR PWA ════ -->
+  <div class="install-wrap" id="install-wrap">
+
+    <!-- Android / Desktop Chrome: botón directo -->
+    <button class="install-btn hidden" id="install-btn" aria-label="Añadir a pantalla de inicio">
+      <svg viewBox="0 0 24 24"><path d="M12 3v13M7 11l5 5 5-5"/><path d="M5 21h14"/></svg>
+      Añadir a pantalla de inicio
+    </button>
+
+    <!-- iOS Safari: instrucciones -->
+    <p class="install-ios" id="install-ios">
+      En Safari, pulsa
+      <strong>Compartir</strong> →
+      <strong>Añadir a pantalla de inicio</strong>
+      para instalar el poemario como app.
+    </p>
+
+  </div>
+
+  <!-- ════ COLOFÓN ════ -->
+  <footer class="colophon">
+    <div class="colophon-line"></div>
+    <p class="colophon-text">Cristina Del Campo &nbsp;·&nbsp; La Háptica del Recuerdo</p>
+  </footer>
+
+  <script>
+    const BASE = 'https://cdccris.github.io/LaHapticaDelRecuerdo';
+
+    // ── 1. Aparición progresiva al scroll ──────────────────────────
+    const items = document.querySelectorAll('.poem-item');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const idx = Array.from(items).indexOf(entry.target);
+          setTimeout(() => entry.target.classList.add('visible'), idx * 55);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+    items.forEach(item => observer.observe(item));
+
+    // ── 2. Colores de acento por poema al hover ────────────────────
+    document.querySelectorAll('.poem-link').forEach(link => {
+      const accent = link.dataset.accent;
+      if (!accent) return;
+
+      link.addEventListener('mouseenter', () => {
+        link.style.borderBottomColor = accent + '55';
+        link.querySelector('.poem-num').style.color  = accent;
+        link.querySelector('.poem-name').style.color = accent;
+        link.querySelector('.poem-dur').style.color  = accent;
+        link.querySelector('.poem-dur').style.opacity = '0.9';
+        link.querySelector('.poem-arrow').style.color = accent;
+        link.querySelector('.poem-thumb').style.borderColor = accent + '55';
+      });
+      link.addEventListener('mouseleave', () => {
+        link.style.borderBottomColor = '';
+        link.querySelector('.poem-num').style.color  = '';
+        link.querySelector('.poem-name').style.color = '';
+        link.querySelector('.poem-dur').style.color  = '';
+        link.querySelector('.poem-dur').style.opacity = '';
+        link.querySelector('.poem-arrow').style.color = '';
+        link.querySelector('.poem-thumb').style.borderColor = '';
+      });
+
+      // Touch: aplicar el color brevemente al tocar y luego navegar
+      link.addEventListener('touchstart', () => {
+        link.querySelector('.poem-num').style.color  = accent;
+        link.querySelector('.poem-name').style.color = accent;
+        link.querySelector('.poem-thumb').style.borderColor = accent + '88';
+      }, { passive: true });
+    });
+
+    // ── 3. Duración de audio (carga diferida, sin bloquear) ────────
+    function loadDurations() {
+      document.querySelectorAll('.poem-link').forEach(link => {
+        const key     = link.dataset.key;
+        const durEl   = link.querySelector('.poem-dur');
+        if (!key || !durEl) return;
+
+        const audio = new Audio();
+        audio.preload = 'metadata';
+
+        audio.addEventListener('loadedmetadata', () => {
+          const secs = Math.round(audio.duration);
+          if (!isFinite(secs) || secs <= 0) return;
+          const m = Math.floor(secs / 60);
+          const s = String(secs % 60).padStart(2, '0');
+          durEl.textContent = `${m}:${s}`;
+          audio.src = '';  // liberar
+        }, { once: true });
+
+        audio.addEventListener('error', () => {
+          durEl.textContent = '';
+        }, { once: true });
+
+        // Intentar m4a primero, luego mp3
+        audio.src = `${BASE}/${key}/audio.m4a`;
+      });
+    }
+
+    // Cargar duraciones solo cuando el índice entre en pantalla
+    const indexSection = document.querySelector('.index-section');
+    const durObserver  = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        loadDurations();
+        durObserver.disconnect();
+      }
+    }, { threshold: 0.05 });
+    durObserver.observe(indexSection);
+  </script>
+
+
+  <script>
+    // ── Service Worker ──────────────────────────────────────────
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/LaHapticaDelRecuerdo/sw.js')
+          .catch(() => {});
+      });
+    }
+
+    // ── Botón instalar PWA ───────────────────────────────────────
+    const installBtn = document.getElementById('install-btn');
+    const installIos = document.getElementById('install-ios');
+    let deferredPrompt = null;
+
+    // Detectar iOS
+    const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isInStandaloneMode = window.navigator.standalone === true
+                            || window.matchMedia('(display-mode: standalone)').matches;
+
+    if (isInStandaloneMode) {
+      // Ya está instalada — ocultar todo el bloque
+      document.getElementById('install-wrap').style.display = 'none';
+    } else if (isIos) {
+      // iOS: mostrar instrucciones
+      installIos.classList.add('visible');
+    }
+
+    // Android/Chrome/Edge: capturar el evento antes de que el navegador lo muestre
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.classList.remove('hidden');
+    });
+
+    installBtn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if (outcome === 'accepted') {
+        document.getElementById('install-wrap').style.display = 'none';
+      }
+    });
+
+    // Ocultar cuando se instale
+    window.addEventListener('appinstalled', () => {
+      document.getElementById('install-wrap').style.display = 'none';
+    });
+  </script>
+</body>
+</html>

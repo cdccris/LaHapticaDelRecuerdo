@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Metamorfosis · La Háptica del Recuerdo</title>
+  <meta name="description" content="Escucha «Metamorfosis», narrado por Cristina Del Campo.">
+  <meta property="og:title"        content="Metamorfosis">
+  <meta property="og:description"  content="Escucha «Metamorfosis», narrado por Cristina Del Campo.">
+  <meta property="og:image"        content="https://cdccris.github.io/LaHapticaDelRecuerdo/Metamorfosis/cover.png">
+  <meta property="og:type"         content="website">
+  <meta property="og:url"          content="https://cdccris.github.io/LaHapticaDelRecuerdo/play/Metamorfosis/">
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="Metamorfosis">
+  <meta name="twitter:description" content="Escucha «Metamorfosis», narrado por Cristina Del Campo.">
+  <meta name="twitter:image"       content="https://cdccris.github.io/LaHapticaDelRecuerdo/Metamorfosis/cover.png">
+  <meta name="theme-color"         content="#0e0418">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#0e0418;
+      --bg2:#200830;
+      --accent:#d060ff;
+      --text:#f3f4f6;
+      --muted:#cbd5e1;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { min-height: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: var(--text);
+      background:
+        radial-gradient(900px 520px at 60% -5%, var(--bg2), transparent 55%),
+        linear-gradient(180deg, var(--bg1), #0e0418);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 32px 16px 80px;
+    }
+
+    /* ── Barra de progreso de lectura ── */
+    #read-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2px;
+      width: 0%;
+      background: var(--accent);
+      z-index: 100;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 6px var(--accent);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 24px;
+      box-shadow: 0 16px 60px rgba(0,0,0,.5);
+      padding: 28px 28px 36px;
+      backdrop-filter: blur(10px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .back {
+      align-self: flex-start;
+      font-size: 14px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      color: var(--muted);
+      text-decoration: none;
+      opacity: 0.65;
+      margin-bottom: 20px;
+      transition: opacity .2s;
+      letter-spacing: 0.04em;
+    }
+    .back:hover { opacity: 1; }
+
+    .cover {
+      width: 180px; height: 180px;
+      border-radius: 16px; object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: #0e0418;
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(22px, 5vw, 32px);
+      line-height: 1.2;
+      text-align: center;
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 15px;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    audio {
+      width: 100%; outline: none;
+      accent-color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .actions {
+      display: flex; gap: 10px;
+      flex-wrap: wrap; justify-content: center;
+      margin-bottom: 8px;
+    }
+    .btn {
+      appearance: none; border: none; cursor: pointer;
+      background: var(--accent); color: #0e0418;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 600; font-size: 15px;
+      padding: 10px 20px; border-radius: 12px;
+      transition: .15s transform, .15s filter;
+      text-decoration: none;
+      display: inline-flex; align-items: center;
+      letter-spacing: 0.04em;
+    }
+    .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .btn.secondary {
+      background: transparent; color: var(--text);
+      border: 1px solid rgba(255,255,255,0.22);
+    }
+    .hint {
+      font-size: 13px; color: var(--muted);
+      font-style: italic;
+      text-align: center; margin-bottom: 28px;
+    }
+
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10), transparent);
+      margin-bottom: 28px;
+    }
+
+    /* ── Texto del poema ── */
+    .poem-text {
+      width: 100%;
+      text-align: center;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(16px, 2.5vw, 19px);
+      font-weight: 300;
+      line-height: 1.9;
+      color: rgba(243,244,246,0.90);
+      margin-bottom: 40px;
+    }
+    .poem-text .strophe { margin-bottom: 1.7em; }
+    .poem-text .strophe:last-child { margin-bottom: 0; }
+
+    /* ── Navegación entre poemas ── */
+    .poem-nav {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      gap: 12px;
+    }
+    .nav-btn {
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+      color: var(--muted);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 14px;
+      font-style: italic;
+      letter-spacing: 0.04em;
+      opacity: 0.7;
+      transition: opacity 0.2s, color 0.2s;
+      max-width: 42%;
+    }
+    .nav-btn:hover { opacity: 1; color: var(--accent); }
+    .nav-btn.prev { flex-direction: row; text-align: left; }
+    .nav-btn.next { flex-direction: row-reverse; text-align: right; }
+    .nav-btn .nav-arrow {
+      font-size: 18px; flex-shrink: 0;
+      color: var(--accent); opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .nav-btn:hover .nav-arrow { opacity: 1; }
+    .nav-btn.empty { pointer-events: none; opacity: 0; }
+    .nav-center {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 11px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--muted);
+      opacity: 0.4; white-space: nowrap;
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 20px 12px 60px; }
+      .card { padding: 22px 18px 28px; }
+      .cover { width: 140px; height: 140px; }
+      .nav-btn .nav-label { display: none; }
+      .nav-btn { max-width: 30%; }
+    }
+  </style>
+</head>
+<body>
+  <div id="read-progress"></div>
+
+  <main class="card" role="region" aria-label="Reproductor: Metamorfosis">
+
+    <a class="back" href="https://cdccris.github.io/LaHapticaDelRecuerdo/">← Poemario</a>
+
+    <img class="cover"
+         src="https://cdccris.github.io/LaHapticaDelRecuerdo/Metamorfosis/cover.png"
+         alt="Portada de Metamorfosis"
+         onerror="this.style.display='none'">
+
+    <h1>Metamorfosis</h1>
+    <div class="meta">Lectura por Cristina Del Campo</div>
+
+    <audio id="player" controls preload="metadata" aria-label="Audio: Metamorfosis">
+      <source src="https://cdccris.github.io/LaHapticaDelRecuerdo/Metamorfosis/audio.m4a" type="audio/mp4">
+      <source src="https://cdccris.github.io/LaHapticaDelRecuerdo/Metamorfosis/audio.mp3" type="audio/mpeg">
+      Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <div class="actions">
+      <a class="btn"
+         href="https://cdccris.github.io/LaHapticaDelRecuerdo/Metamorfosis/audio.mp3"
+         download="Metamorfosis_CristinaDelCampo.mp3">Descargar MP3</a>
+      <button class="btn secondary" id="share">Compartir</button>
+    </div>
+    <p class="hint">En móviles pulsa ▶ para empezar.</p>
+
+    <div class="divider"></div>
+
+    <div class="poem-text" aria-label="Texto del poema">
+        <p class="strophe">Pienso en ti y aparezco yo.</p>
+        <p class="strophe">Yo, que me quité la venda<br>para mirar al destino a los ojos<br>y decirle, tenía que pasar.</p>
+        <p class="strophe">Yo, que por primera vez en mi vida<br>decidí no pensar en el después<br>y tirarme al vacío.</p>
+        <p class="strophe">Yo, que siempre intenté dibujarte un futuro<br>aun sabiendo que todo tenía fecha de caducidad.</p>
+        <p class="strophe">Por eso era urgente sacar todo del corazón,<br>vaciarnos hasta que no nos quedase dentro<br>ni un ápice de amor,<br>antes de que fuera tarde,<br>antes de que el golpe llegara,<br>antes de que la bomba estallase<br>y se llenase todo de recuerdos.</p>
+        <p class="strophe">Nunca nos hizo falta cubrirnos la espalda,<br>no íbamos a hacernos daño.<br>Y quizá confundimos el amor con otras cosas,<br>pero qué bonito fue confundirlo.</p>
+        <p class="strophe">Ahora recuerdo todo lo que nos dijimos,<br>los intentos de parar el tiempo,<br>que no importaban las horas que tenía la noche<br>porque las pasaríamos en vela.</p>
+        <p class="strophe">Recuerdo nuestras pieles rozando,<br>el tacto de tu voz.<br>Nuestras piernas enlazadas,<br>el calor.</p>
+        <p class="strophe">Recuerdo, pero ya no duele,<br>porque solo duelen los finales<br>y nunca nada terminó,<br>solo cambió.</p>
+        <p class="strophe">Porque fuimos<br>y seremos<br>metamorfosis.</p>
+    </div>
+
+    <!-- Navegación entre poemas -->
+    <nav class="poem-nav" aria-label="Navegación entre poemas">
+      <a class="nav-btn prev" href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/LaVisita/" aria-label="Poema anterior: La Visita"><span class="nav-arrow">←</span><span class="nav-label">La Visita</span></a>
+      <span class="nav-center">14 / 20</span>
+      <a class="nav-btn next" href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/MiradasPorDoquier/" aria-label="Poema siguiente: Miradas por Doquier"><span class="nav-label">Miradas por Doquier</span><span class="nav-arrow">→</span></a>
+    </nav>
+
+  </main>
+
+  <script>
+    // ── Progreso de lectura ──────────────────────────────────────
+    const bar = document.getElementById('read-progress');
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total    = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+    }, { passive: true });
+
+    // ── Compartir ────────────────────────────────────────────────
+    const shareBtn = document.getElementById('share');
+    if (navigator.share) {
+      shareBtn.addEventListener('click', () => navigator.share({
+        title: 'Metamorfosis',
+        text: 'Escucha este poema de Cristina Del Campo',
+        url: location.href
+      }));
+    } else {
+      shareBtn.style.display = 'none';
+    }
+
+    // ── Atajos de teclado ────────────────────────────────────────
+    const player = document.getElementById('player');
+    document.addEventListener('keydown', e => {
+      if (['INPUT','TEXTAREA'].includes(document.activeElement.tagName)) return;
+      if (e.code === 'Space' || e.key === 'k') { e.preventDefault(); player.paused ? player.play() : player.pause(); }
+      if (e.key === 'ArrowRight') player.currentTime = Math.min(player.duration||0, player.currentTime+5);
+      if (e.key === 'ArrowLeft')  player.currentTime = Math.max(0, player.currentTime-5);
+    });
+
+    player.addEventListener('error', () => {
+      alert('No se pudo cargar el audio. Inténtalo de nuevo más tarde.');
+    });
+  </script>
+</body>
+</html>
