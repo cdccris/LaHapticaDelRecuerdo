@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>G = d·t · La Háptica del Recuerdo</title>
+  <title>G = d-t · La Háptica del Recuerdo</title>
   <meta property="og:image" content="https://cdccris.github.io/LaHapticaDelRecuerdo/GDT/cover.png">
   <meta name="theme-color" content="#0a0a0f">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,7 +41,7 @@
   <main class="card">
     <a class="back" href="https://cdccris.github.io/LaHapticaDelRecuerdo/">← Poemario</a>
     <img class="cover" src="https://cdccris.github.io/LaHapticaDelRecuerdo/GDT/cover.png" alt="" onerror="this.style.display='none'">
-    <h1>G = d·t</h1>
+    <h1>G = d-t</h1>
     <div class="meta">Lectura por Cristina Del Campo</div>
     <audio id="player" controls preload="metadata">
       <source src="https://cdccris.github.io/LaHapticaDelRecuerdo/GDT/audio.m4a" type="audio/mp4">
@@ -72,7 +72,7 @@
   <script>
     window.addEventListener('scroll',()=>{const b=document.getElementById('read-progress');const t=document.documentElement.scrollHeight-window.innerHeight;b.style.width=t>0?(window.scrollY/t*100)+'%':'0%';},{passive:true});
     const s=document.getElementById('share');
-    if(navigator.share){s.addEventListener('click',()=>navigator.share({title:'G = d·t',text:'Escucha este poema de Cristina Del Campo',url:location.href}));}else{s.style.display='none';}
+    if(navigator.share){s.addEventListener('click',()=>navigator.share({title:'G = d-t',text:'Escucha este poema de Cristina Del Campo',url:location.href}));}else{s.style.display='none';}
     const p=document.getElementById('player');
     document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;if(e.code==='Space'||e.key==='k'){e.preventDefault();p.paused?p.play():p.pause();}if(e.key==='ArrowRight')p.currentTime=Math.min(p.duration||0,p.currentTime+5);if(e.key==='ArrowLeft')p.currentTime=Math.max(0,p.currentTime-5);});
   </script>
