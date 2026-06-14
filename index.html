@@ -73,9 +73,157 @@
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     @keyframes scrollPulse{0%,100%{opacity:0.3;transform:scaleY(0.8)}50%{opacity:1;transform:scaleY(1.1)}}
     @media(max-width:500px){.poem-link{grid-template-columns:44px 1fr auto auto;gap:0 10px;padding:10px 0}.poem-thumb{width:44px;height:44px;border-radius:6px}.poem-name{font-size:16px}.poem-dur{font-size:10px}}
+
+    /* ── PASSWORD GATE ── */
+    #gate {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0a0205;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    #gate::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 30%, rgba(139,26,46,0.4) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(42,16,32,0.7) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    #gate-inner {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+      max-width: 380px; width: 100%;
+      animation: fadeUp 1s ease both;
+    }
+    #gate-ornament {
+      font-size: 20px; letter-spacing: 0.5em;
+      color: var(--gold); opacity: 0.65;
+      margin-bottom: 28px;
+    }
+    #gate-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(22px, 5vw, 38px);
+      font-weight: 400; letter-spacing: 0.06em; line-height: 1.2;
+      color: var(--text);
+      text-shadow: 0 2px 30px rgba(139,26,46,0.6);
+      margin-bottom: 8px;
+    }
+    #gate-divider {
+      width: 90px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 20px auto 10px;
+    }
+    #gate-sub {
+      font-size: 14px; font-style: italic; font-weight: 300;
+      color: var(--muted); letter-spacing: 0.1em;
+      margin-bottom: 36px;
+    }
+    #gate-form {
+      width: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 14px;
+    }
+    #gate-input {
+      width: 100%; max-width: 280px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 16px; letter-spacing: 0.25em;
+      color: var(--text); text-align: center;
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    #gate-input:focus {
+      border-color: rgba(201,168,76,0.7);
+      box-shadow: 0 0 20px rgba(201,168,76,0.1);
+    }
+    #gate-input::placeholder {
+      color: rgba(154,136,120,0.5);
+      letter-spacing: 0.15em;
+    }
+    #gate-btn {
+      appearance: none; border: none; cursor: pointer;
+      background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.1));
+      border: 1px solid rgba(201,168,76,0.5);
+      color: var(--gold);
+      font-family: 'Cinzel', serif;
+      font-size: 12px; letter-spacing: 0.28em; text-transform: uppercase;
+      padding: 13px 36px; border-radius: 50px;
+      transition: background 0.3s, border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    #gate-btn:hover {
+      background: rgba(201,168,76,0.18);
+      border-color: rgba(201,168,76,0.85);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(201,168,76,0.15);
+    }
+    #gate-btn:active { transform: translateY(0); }
+    #gate-error {
+      font-size: 13px; font-style: italic;
+      color: rgba(220,80,80,0.85);
+      letter-spacing: 0.06em;
+      height: 18px;
+      transition: opacity 0.3s;
+      opacity: 0;
+    }
+    #gate-error.show { opacity: 1; }
+    #gate-stamp {
+      margin-top: 44px;
+      width: 52px; height: 52px;
+      border: 2px solid rgba(201,168,76,0.25);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif;
+      font-size: 9px; letter-spacing: 0.18em;
+      color: rgba(201,168,76,0.4);
+      text-transform: uppercase;
+      position: relative;
+    }
+    #gate-stamp::before {
+      content: '';
+      position: absolute; inset: 3px;
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 2px;
+    }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-8px); }
+      40%      { transform: translateX(8px); }
+      60%      { transform: translateX(-5px); }
+      80%      { transform: translateX(5px); }
+    }
+    .shake { animation: shake 0.45s ease; }
+    #poemario { display: none; }
   </style>
 </head>
 <body>
+
+  <!-- ════ PASSWORD GATE ════ -->
+  <div id="gate">
+    <div id="gate-inner">
+      <span id="gate-ornament">✦ &nbsp; ✦ &nbsp; ✦</span>
+      <h1 id="gate-title">La Háptica<br>del Recuerdo</h1>
+      <div id="gate-divider"></div>
+      <p id="gate-sub">Introduce el código de acceso</p>
+      <div id="gate-form">
+        <input id="gate-input" type="password"
+               placeholder="· · · · · · ·"
+               autocomplete="off" autocorrect="off"
+               spellcheck="false" maxlength="32"
+               aria-label="Código de acceso">
+        <button id="gate-btn" type="button">Acceder</button>
+        <span id="gate-error">Código incorrecto</span>
+      </div>
+      <div id="gate-stamp">CDC</div>
+    </div>
+  </div>
+
+  <!-- ════ POEMARIO (oculto hasta autenticación) ════ -->
+  <div id="poemario">
   <section class="cover-section" aria-label="Portada del poemario">
     <div class="cover-bg"></div>
     <div class="cover-lines"></div>
@@ -861,6 +1009,49 @@
       if (outcome === 'accepted') document.getElementById('install-wrap').style.display = 'none';
     });
     window.addEventListener('appinstalled', () => { document.getElementById('install-wrap').style.display = 'none'; });
+  </script>
+  </div><!-- /poemario -->
+
+  <script>
+
+    // ── Autenticación ────────────────────────────────────────────
+    (function() {
+      const PASS = 'LHDR13';
+      const KEY  = 'lhdr_auth';
+
+      function unlock() {
+        document.getElementById('gate').style.display = 'none';
+        document.getElementById('poemario').style.display = '';
+      }
+
+      // Si ya autenticado en esta sesión → acceso directo
+      if (sessionStorage.getItem(KEY) === '1') { unlock(); return; }
+
+      const input = document.getElementById('gate-input');
+      const btn   = document.getElementById('gate-btn');
+      const err   = document.getElementById('gate-error');
+      const form  = document.getElementById('gate-form');
+
+      function attempt() {
+        if (input.value === PASS) {
+          sessionStorage.setItem(KEY, '1');
+          document.getElementById('gate').style.opacity = '0';
+          document.getElementById('gate').style.transition = 'opacity 0.5s ease';
+          setTimeout(unlock, 500);
+        } else {
+          err.classList.add('show');
+          form.classList.remove('shake');
+          void form.offsetWidth; // reflow
+          form.classList.add('shake');
+          input.value = '';
+          input.focus();
+          setTimeout(() => err.classList.remove('show'), 2200);
+        }
+      }
+
+      btn.addEventListener('click', attempt);
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
+    })();
   </script>
 </body>
 </html>
