@@ -165,6 +165,19 @@
       80%{transform:translateX(5px)}
     }
     .shaking { animation: shake 0.4s ease; }
+
+    .g-input-wrap {
+      position: relative; width: 100%; max-width: 270px; margin: 0 auto 14px;
+    }
+    #gate-input { width: 100%; margin: 0; padding-right: 48px; }
+    #gate-eye {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; padding: 4px;
+      color: rgba(201,168,76,0.45); line-height: 0; transition: color 0.2s;
+    }
+    #gate-eye:hover { color: rgba(201,168,76,0.85); }
+    #gate-eye svg { width: 18px; height: 18px; stroke: currentColor;
+      fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 </style>
 </head>
 <body>
@@ -175,9 +188,17 @@
       <h1 class="g-title">La Háptica<br>del Recuerdo</h1>
       <div class="g-div"></div>
       <p class="g-sub">Introduce el código de acceso</p>
-      <input id="gate-input" type="password"
-             placeholder="· · · · · · ·"
-             autocomplete="off" spellcheck="false" maxlength="32">
+      <div class="g-input-wrap">
+        <input id="gate-input" type="password"
+               placeholder="· · · · · · ·"
+               autocomplete="off" spellcheck="false" maxlength="32">
+        <button id="gate-eye" type="button" aria-label="Mostrar/ocultar contraseña">
+          <svg id="eye-icon" viewBox="0 0 24 24">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
       <button id="gate-btn">Acceder</button>
       <span id="gate-err">Código incorrecto</span>
       <div class="g-stamp">CDC</div>
@@ -903,12 +924,12 @@
       const accent = link.dataset.accent;
       if (!accent) return;
       link.addEventListener('mouseenter', () => {
-        link.style.borderBottomColor = accent + '55';
-        link.querySelector('.poem-num').style.color  = accent;
-        link.querySelector('.poem-name').style.color = accent;
-        link.querySelector('.poem-dur').style.color  = accent;
-        link.querySelector('.poem-arrow').style.color = accent;
-        link.querySelector('.poem-thumb').style.borderColor = accent + '55';
+        link.style.borderBottomColor = 'rgba(196,184,168,0.35)';
+        link.querySelector('.poem-num').style.color  = '#c4b8a8';
+        link.querySelector('.poem-name').style.color = '#c4b8a8';
+        link.querySelector('.poem-dur').style.color  = '#c4b8a8';
+        link.querySelector('.poem-arrow').style.color = '#c4b8a8';
+        link.querySelector('.poem-thumb').style.borderColor = 'rgba(196,184,168,0.35)';
       });
       link.addEventListener('mouseleave', () => {
         link.style.borderBottomColor = '';
@@ -919,9 +940,9 @@
         link.querySelector('.poem-thumb').style.borderColor = '';
       });
       link.addEventListener('touchstart', () => {
-        link.querySelector('.poem-num').style.color  = accent;
-        link.querySelector('.poem-name').style.color = accent;
-        link.querySelector('.poem-thumb').style.borderColor = accent + '88';
+        link.querySelector('.poem-num').style.color  = '#c4b8a8';
+        link.querySelector('.poem-name').style.color = '#c4b8a8';
+        link.querySelector('.poem-thumb').style.borderColor = 'rgba(196,184,168,0.55)';
       }, { passive: true });
     });
 
@@ -976,7 +997,7 @@
 
   <script>
     (function () {
-      var PASS = 'LHDR13';
+      var PASS = 'cdccris';
       var KEY  = 'lhdr_ok';
       var gate = document.getElementById('gate');
       var poem = document.getElementById('poemario');
@@ -1011,6 +1032,17 @@
         }
       }
 
+      // Eye toggle
+      var eyeBtn  = document.getElementById('gate-eye');
+      var eyeIcon = document.getElementById('eye-icon');
+      var eyeShowing = false;
+      eyeBtn.addEventListener('click', function() {
+        eyeShowing = !eyeShowing;
+        inp.type = eyeShowing ? 'text' : 'password';
+        eyeIcon.innerHTML = eyeShowing
+          ? '<line x1="2" y1="2" x2="22" y2="22"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 11 7 11 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.526 13.526 0 0 0 1 12s4 8 11 8a9.74 9.74 0 0 0 5.39-1.61"/><circle cx="12" cy="12" r="3" style="display:none"/>'
+          : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+      });
       btn.addEventListener('click', attempt);
       inp.addEventListener('keydown', function(e){
         if (e.key === 'Enter') attempt();
