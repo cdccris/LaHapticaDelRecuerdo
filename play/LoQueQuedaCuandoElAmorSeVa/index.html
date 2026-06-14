@@ -25,14 +25,12 @@
     .btn.secondary{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.22)}
     .hint{font-size:13px;color:var(--muted);font-style:italic;text-align:center;margin-bottom:28px}
     .divider{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.10),transparent);margin-bottom:28px}
-    .poem-text{width:100%;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(16px,2.5vw,19px);font-weight:300;line-height:1.9;color:rgba(243,244,246,0.90);margin-bottom:40px}
-    .poem-text .strophe{margin-bottom:1.7em;text-align:justify;text-align-last:justify}
-    .poem-text .strophe:last-child{margin-bottom:0}
-    .poem-text .strophe .end{display:block;text-align:left}
+    .poem-text{width:100%;text-align:center;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(16px,2.5vw,19px);font-weight:300;line-height:1.9;color:rgba(243,244,246,0.90);margin-bottom:40px}
+    .poem-text .strophe{margin-bottom:1.7em}.poem-text .strophe:last-child{margin-bottom:0}
     .poem-nav{width:100%;display:flex;justify-content:space-between;align-items:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.08);gap:12px}
-    .nav-btn{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-family:'Cormorant Garamond',Georgia,serif;font-size:14px;font-style:italic;letter-spacing:0.04em;opacity:0.7;transition:opacity 0.2s,color 0.2s;max-width:42%}.nav-btn:hover{opacity:1;color:var(--accent)}
+    .nav-btn{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-family:'Cormorant Garamond',Georgia,serif;font-size:14px;font-style:italic;letter-spacing:0.04em;opacity:0.7;transition:opacity 0.2s,color 0.2s;max-width:42%}.nav-btn:hover{opacity:1;color:#c4b8a8}
     .nav-btn.prev{flex-direction:row;text-align:left}.nav-btn.next{flex-direction:row-reverse;text-align:right}
-    .nav-btn .nav-arrow{font-size:18px;flex-shrink:0;color:var(--accent);opacity:0.6;transition:opacity 0.2s}.nav-btn:hover .nav-arrow{opacity:1}
+    .nav-btn .nav-arrow{font-size:18px;flex-shrink:0;color:#c4b8a8;opacity:0.7;transition:opacity 0.2s}.nav-btn:hover .nav-arrow{opacity:1}
     .nav-btn.empty{pointer-events:none;opacity:0}
     .nav-center{font-family:'Cormorant Garamond',Georgia,serif;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);opacity:0.4;white-space:nowrap}
     @media(max-width:480px){body{padding:20px 12px 60px}.card{padding:22px 18px 28px}.cover{width:140px;height:140px}.nav-btn .nav-label{display:none}.nav-btn{max-width:30%}}
@@ -56,16 +54,19 @@
     <p class="hint">En móviles pulsa ▶ para empezar.</p>
     <div class="divider"></div>
     <div class="poem-text">
-        <p class="strophe">Cuando una relación llega a su fin, muchas cosas terminan.<br>Termina la intimidad, los proyectos de futuro, termina el<br>"nosotros" que pasa a convertirse en un "tú" y "yo". Termina el<br>lenguaje compartido y los desvelos de madrugada que<br>desembocan en abrazo. Termina, incluso, una forma especial de<span class="end">mirarse que solo conocen quienes la practican.</span></p>
-        <p class="strophe">Sin embargo, hay algo que siempre permanece. Como un poso<br>de café al fondo de la taza cuando ya te lo has bebido. Lo que<br>siempre queda es la cantidad de información que conoces sobre<br>el otro. Las pequeñeces sobre su vida, las trivialidades de sus<br>días. Conoces cada manía. El número exacto de veces que<br>pestañea cuando tiene los nervios a flor de piel. A veces,<br>incluso, adoptas una forma concreta de realizar las cosas<span class="end">porque así las hacía.</span></p>
-        <p class="strophe">Pero hay algo en lo que no dejo de pensar. Algo que no deja de<br>rondarme la cabeza, rebotando de un lado a otro como el logo<br>del DVD en la pantalla de espera, chocando contra las paredes<span class="end">de mi pensamiento.</span></p>
-        <p class="strophe">Y es que, en la mayoría de las ocasiones, esa información no<span class="end">tiene uso posible.</span></p>
-        <p class="strophe">Suena crudo, pero siento como si todo lo que se va formando<br>durante las relaciones, la cantidad de conocimientos<br>acumulados sobre los gustos de la otra persona, no sirviesen de<span class="end">nada cuando esta llega a su fin.</span></p>
-        <p class="strophe">¿De qué me sirve, ahora, saber cuántas cucharadas de ColaCao<br>le gustan en la leche? ¿Conocer cada pormenor de la anécdota<br>que siempre cuenta? ¿Para qué quiero acordarme, cada abril, de<br>ese día que no disfrutará? ¿O de la fecha exacta que tendrá<span class="end">marcada en el calendario?</span></p>
-        <p class="strophe">Me resulta del todo inútil conocer cada detalle si no puedo<br>hacer nada con él. Es similar —perdonad por el segundo símil<br>informático— a la memoria caché de las aplicaciones del<br>móvil, que siempre está presente, pero no tienes muy claro qué<span class="end">fin tiene.</span></p>
-        <p class="strophe">Siento que la información que conozco sobre el otro ya no<br>tiene hogar, como si fuese un errante en busca de un lugar<br>donde establecerse pero que solo yo sé que no tiene destino<span class="end">final.</span></p>
-        <p class="strophe">Es misión imposible procurar no acordarte de nimiedades sobre<br>alguien a quien querías, sobre todo, cuando la ruptura es<br>reciente. No es el amor que le tenías, no es el recuerdo de los<br>momentos compartidos, ni siquiera es el cómo te hacía sentir.<br>Es esa información la que nos persigue, la que nos recuerda y<br>muchas veces nos ata, la que no nos deja soltar. El conocer<br>hasta el más mínimo detalle de la otra persona es lo que lo<span class="end">mantiene vivo, al menos, en la memoria.</span></p>
-        <p class="strophe">Me gusta pensar que, aunque lo crea inútil, es bonito también<br>retener ese cúmulo de conocimientos sin un fin determinado.<br>Porque sí, llega el momento en que aprendes a dejar vivir en el<br>recuerdo memorias que ya no duelen y consigues recordar sin<br>que te quemen. Y porque, a fin de cuentas, es lo que queda<span class="end">cuando el amor se va.</span></p>
+        <p class="strophe">Cuando una relación llega a su fin, muchas cosas terminan.<br>Termina la intimidad, los proyectos de futuro,<br>termina el «nosotros» que pasa a convertirse en un «tú» y «yo».</p>
+        <p class="strophe">Termina el lenguaje compartido<br>y los desvelos de madrugada que desembocan en abrazo.<br>Termina, incluso, una forma especial de mirarse<br>que solo conocen quienes la practican.</p>
+        <p class="strophe">Sin embargo, hay algo que siempre permanece.<br>Como un poso de café al fondo de la taza<br>cuando ya te lo has bebido.</p>
+        <p class="strophe">Lo que siempre queda<br>es la cantidad de información que conoces sobre el otro.<br>Las pequeñeces sobre su vida,<br>las trivialidades de sus días.<br>Conoces cada manía.<br>El número exacto de veces que pestañea<br>cuando tiene los nervios a flor de piel.<br>A veces, incluso, adoptas una forma concreta<br>de realizar las cosas porque así las hacía.</p>
+        <p class="strophe">Pero hay algo en lo que no dejo de pensar.<br>Algo que no deja de rondarme la cabeza.</p>
+        <p class="strophe">Y es que, en la mayoría de las ocasiones,<br>esa información no tiene uso posible.</p>
+        <p class="strophe">¿De qué me sirve, ahora, saber cuántas cucharadas<br>le gustan en la leche?<br>¿Conocer cada pormenor de la anécdota que siempre cuenta?<br>¿Para qué quiero acordarme, cada abril, de ese día?</p>
+        <p class="strophe">Me resulta del todo inútil conocer cada detalle<br>si no puedo hacer nada con él.</p>
+        <p class="strophe">Siento que la información que conozco sobre el otro<br>ya no tiene hogar,<br>como si fuese un errante en busca de un lugar<br>donde establecerse,<br>pero que solo yo sé que no tiene destino final.</p>
+        <p class="strophe">Es misión imposible<br>procurar no acordarte de nimiedades<br>sobre alguien a quien querías.</p>
+        <p class="strophe">No es el amor que le tenías,<br>no es el recuerdo de los momentos compartidos,<br>ni siquiera es el cómo te hacía sentir.<br>Es esa información la que nos persigue,<br>la que nos recuerda y muchas veces nos ata,<br>la que no nos deja soltar.</p>
+        <p class="strophe">Me gusta pensar que, aunque lo crea inútil,<br>es bonito también retener ese cúmulo de conocimientos.<br>Porque sí, llega el momento en que aprendes<br>a dejar vivir en el recuerdo memorias que ya no duelen<br>y consigues recordar sin que te quemen.</p>
+        <p class="strophe">Y porque, a fin de cuentas,<br>es lo que queda cuando el amor se va.</p>
     </div>
     <nav class="poem-nav">
       <a class="nav-btn prev" href="https://cdccris.github.io/LaHapticaDelRecuerdo/play/ParamosDelRecuerdo/"><span class="nav-arrow">←</span><span class="nav-label">Páramos del Recuerdo</span></a>
